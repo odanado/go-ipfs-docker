@@ -28,5 +28,9 @@ jobs:
           platforms: linux/amd64,linux/arm64
           context: ./go-ipfs
           file: ./go-ipfs/Dockerfile
-          pull: false
-          push: false
+          pull: true
+          push: true
+          cache-from: type=registry,ref=settlemint/go-ipfs:latest
+          cache-to: type=inline
+          tags: |
+            odanado/go-ipfs:latest
