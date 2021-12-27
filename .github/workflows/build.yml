@@ -27,6 +27,6 @@ jobs:
         with:
           platforms: linux/amd64,linux/arm64
           context: ./go-ipfs
-          file: ./Dockerfile
+          file: ./go-ipfs/Dockerfile
           pull: false
           push: false
