@@ -1,4 +1,4 @@
-name: build
+name: manual
 
 on:
   push:
@@ -11,7 +11,7 @@ on:
         required: true
 
 jobs:
-  build:
+  manual:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,7 +20,7 @@ jobs:
           REF="${{ github.event.inputs.tag }}"
           echo "::set-output name=name::$(echo ${REF:-master})"
         shell: bash
-      - run: echo "${{ steps.ref.name }}"
+      - run: echo "${{ steps.ref.outputs.name }}"
       - uses: actions/checkout@v2
         with:
           repository: ipfs/go-ipfs
