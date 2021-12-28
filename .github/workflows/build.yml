@@ -1,8 +1,6 @@
 name: build
 
 on:
-  push:
-    branches: [ main ]
   pull_request:
   workflow_dispatch:
     inputs:
@@ -25,7 +23,7 @@ jobs:
         id: tag
         run: |
           REF="${{ github.event.inputs.tag }}"
-          echo "::set-output name=value::$(echo ${REF:-latest})"
+          echo "::set-output name=value::$(echo ${REF:-nightly})"
         shell: bash
 
       - uses: actions/checkout@v2
@@ -54,7 +52,7 @@ jobs:
           file: ./go-ipfs/Dockerfile
           pull: true
           push: true
-          cache-from: type=registry,ref=settlemint/go-ipfs:latest
+          cache-from: type=registry,ref=odanado/go-ipfs:latest
           cache-to: type=inline
           tags: |
             "odanado/go-ipfs:${{ steps.tag.outputs.value }}"
