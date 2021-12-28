@@ -1,0 +1,27 @@
+name: build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'tag of go-ipfs'
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: ref
+        run: |
+          REF="${{ github.event.inputs.tag }}"
+          echo "::set-output name=name::$(echo ${REF:-master})"
+        shell: bash
+      - run: echo "${{ steps.ref.name }}"
+      - uses: actions/checkout@v2
+        with:
+          repository: ipfs/go-ipfs
+          path: go-ipfs
