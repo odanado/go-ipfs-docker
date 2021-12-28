@@ -1,5 +1,5 @@
 # go-ipfs-docker
-![https://img.shields.io/docker/v/odanado/go-ipfs/latest](https://hub.docker.com/r/odanado/go-ipfs)
+[![](https://img.shields.io/docker/v/odanado/go-ipfs/latest)](https://hub.docker.com/r/odanado/go-ipfs)
 
 Docker Image of https://github.com/ipfs/go-ipfs.
 
