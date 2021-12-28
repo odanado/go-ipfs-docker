@@ -5,16 +5,34 @@ on:
     branches: [ main ]
   pull_request:
   workflow_dispatch:
+    inputs:
+      tag:
+        description: 'tag of go-ipfs'
+        required: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Get ref
+        id: ref
+        run: |
+          REF="${{ github.event.inputs.tag }}"
+          echo "::set-output name=value::$(echo ${REF:-master})"
+        shell: bash
+      - name: Get tag
+        id: tag
+        run: |
+          REF="${{ github.event.inputs.tag }}"
+          echo "::set-output name=value::$(echo ${REF:-latest})"
+        shell: bash
+
       - uses: actions/checkout@v2
         with:
           repository: ipfs/go-ipfs
           path: go-ipfs
+          ref: "${{ steps.ref.outputs.value }}"
           
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -39,4 +57,4 @@ jobs:
           cache-from: type=registry,ref=settlemint/go-ipfs:latest
           cache-to: type=inline
           tags: |
-            odanado/go-ipfs:latest
+            "odanado/go-ipfs:${{ steps.tag.outputs.value }}"
